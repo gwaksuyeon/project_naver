@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>NAVER Corporation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="naver.css">
+        <link rel="stylesheet" href="sprite.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><!--구형브라우저 html5사용가능-->
+        <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><!--구형브라우저 css3가능-->
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script><!--IE8이하 미디어쿼리 인식-->
+
+        <script>
+            $(function(){
+                $("div.drop_menu").hide();
+
+                $("li.header_li").hover(function() {
+                    $(this).children("div.drop_menu").stop().slideToggle(500)
+                });
+            });
+
+            $(function(){
+
+                $(".sprite-cross_gray").hide();
+
+                $("#header_hover").hover(function() {
+                    $(".sprite-cross_gray").stop().toggle();
+                });
+            });
+
+            $(function(){
+                $("div.m_header_wrap").hide();
+
+                $("#menu").click(function() {
+                    $("div.m_header_wrap").show()
+                });
+            });
+
+            $(function(){
+                $("#close").click(function() {
+                    $("div.m_header_wrap").hide()
+                });
+            });
+
+            $(document).ready(function() {
+                slide();
+            });// 슬라이드 
+            function slide() {
+            var wid = 0;
+            var now_num = 0;
+            var count= 0;
+            var slide_length = 0;
+            var auto = null;
+            var hr_width=0;
+            var $panel = $('.visual_con ul');
+            var $panelLi = $panel.children('li');
+
+            // 변수 초기화
+            function init() {
+                wid = $('.visual_con').width();
+                now_num = $('li.bg_1').index();
+                hr_width=$('.slide_hr').width();
+                slide_length = $panelLi.length;
+            }
+
+            // 이벤트 묶음
+            function slideEvent() {
+
+                // 이후 버튼 클릭했을때
+                $('#next').click(function() {
+                nextChkPlay();
+                });
+
+                // 이전 버튼 클릭했을때
+                $('#prev').click(function() {
+                prevChkPlay();
+                });
+
+                // 오토플레이
+                autoPlay();
+
+                // 오토플레이 멈춤
+                autoPlayStop();
+
+                // 오토플레이 재시작
+                autoPlayRestart();
+
+                // 화면크기 재설정 되었을때
+                resize();
+            }
+
+            // 자동실행 함수
+            function autoPlay() {
+                auto = setInterval(function() {
+                nextChkPlay();
+                }, 5000);
+            }
+
+            // 자동실행 멈춤
+            function autoPlayStop() {
+                $panelLi.mouseenter(function() {
+                clearInterval(auto);
+                });
+            }
+
+
+            // 자동실행 멈췄다가 재실행
+            function autoPlayRestart() {
+                $panelLi.mouseleave(function() {
+                auto = setInterval(function() {
+                    nextChkPlay();
+                }, 5000);
+                });
+            }
+
+            // 이전 버튼 클릭시 조건 검사후 슬라이드 무브
+            function prevChkPlay() {
+                if (now_num == 0) {
+                now_num = slide_length - 1;
+                } else {
+                now_num--;
+                }
+                slideMove();
+            }
+
+            // 이후 버튼 클릭시 조건 검사후 슬라이드 무브
+            function nextChkPlay() {
+                if (now_num == slide_length - 1) {
+                now_num = 0;
+                } else {
+                now_num++;
+                }
+                slideMove();
+            }
+
+            // 슬라이드 무브
+            function slideMove() {
+                $panel.stop().animate({
+                'margin-left': -wid * now_num
+                },1000);
+
+                $(".current").text(now_num+1);
+
+                $(".fade").hide();
+                $(".fade").eq(now_num).hide();
+                $(".fade").eq(now_num).fadeIn(1500);
+
+                now_num++;
+                $(".index_hr").width(hr_width / 4 * now_num);
+                now_num--;
+            }
+
+            // 화면크기 조정시 화면 재설정
+            function resize() {
+                $(window).resize(function() {
+                init();
+                $panel.css({
+                    'margin-left': -wid * now_num
+                },1000);
+
+                $(".current").text(now_num+1);
+
+                $(".fade").hide();
+                $(".fade").eq(now_num).hide();
+                $(".fade").eq(now_num).show();
+                
+                now_num++;
+                $(".index_hr").css({
+                    'width': hr_width / 4 * now_num
+                })
+                now_num--;
+                });
+            }
+            init();
+            slideEvent();
+            }
+
+            $(function(){
+                $("div.service_text").hide();
+
+                $(".content_service ul li a").hover(function() {
+                $(this).children("div.service_text").stop().slideToggle(200)
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="wrap">
+            <header>
+                <div class="header_wrap">
+                    <div class="header_logo">
+                        <a href="#">
+                            <img src="http://tndus5837.dothome.co.kr/naver_img/header_logo.png" alt="header_logo">
+                        </a>
+                    </div>
+                    
+                    <div class="header_nav">
+                        <ul class="header_ul">
+                            <li class="header_li">
+                                <a href="#">네이버</a>
+                                <div class="drop_menu">
+                                    <ul class="drop_ul">
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">NAVER</a></li>
+                                                <li><a href="#">네이버소개</a></li>
+                                                <li><a href="#">주요연혁</a></li>
+                                                <li><a href="#">수상내역</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">주요 관계사</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">제휴제안</a></li>
+                                                <li><a href="#">제휴제안 안내</a></li>
+                                                <li><a href="#">제휴제안 등록</a></li>
+                                                <li><a href="#">검토현황 조회</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">CONTACT</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="header_li">
+                                <a href="#">서비스</a>
+                                <div class="drop_menu" >
+                                    <ul class="drop_ul">
+                                        <li class="drop_li">
+                                            <ul class="drop_subul" >
+                                                <li><a href="#">Featured<br>Services</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">For<br>Business</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">For<br>Creators</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">For<br>Developers</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">ALL<br>SERVICES<span class="sprite sprite-cross_white"></span></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="header_li">
+                                <a href="#">가치실현</a>
+                                <div class="drop_menu">
+                                    <ul class="drop_ul">
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">프로젝트 꽃</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#" >기업윤리</a></li>
+                                                <li><a href="#">기업윤리규범</a></li>
+                                                <li><a href="#">기업윤리 상담센터</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#" >프라이버시 센터</a></li>
+                                                <li><a href="#">네이버 리포트</a></li>
+                                                <li><a href="#">개인정보보호</a></li>
+                                                <li><a href="#">정보보호인증</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li id="drop_first"><a href="#">동반성장</a></li>
+                                                <li id="drop_second"><a href="#" id="drop_title">환경</a></li>
+                                                <li><a href="#">데이터센터 각</a></li>
+                                                <li><a href="#">네이버 사옥</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#" >With Naver</a></li>
+                                                <li><a href="#">재단법인 해피빈</a></li>
+                                                <li><a href="#">네이버 문화재단</a></li>
+                                                <li><a href="#">커넥트 재단</a></li>
+                                                <li><a href="#">접근성</a></li>
+                                                <li><a href="#">네이버 라이브러리</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="header_li">
+                                <a href="#">홍보</a>
+                                <div class="drop_menu">
+                                    <ul class="drop_ul">
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">보도자료</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">TV광고</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">미디어 행사</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">커뮤니케이션 채널</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="header_li">
+                                <a href="#">투자정보</a>
+                                <div class="drop_menu">
+                                    <ul class="drop_ul" >
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">기업지배구조</a></li>
+                                                <li><a href="#">주주구성</a></li>
+                                                <li><a href="#">이사회</a></li>
+                                                <li><a href="#">장관</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li id="drop_first"><a href="#" id="drop_title">공시정보</a></li>
+                                                <li id="drop_second" style="margin-bottom:22px;"><a href="#" id="drop_title">주가정보</a></li>
+                                                <li id="drop_second"><a href="#" id="drop_title">재무제표</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">IR일정</a></li>
+                                                <li><a href="#">IR행사</a></li>
+                                                <li><a href="#">IR MEETING</a></li>
+                                                <li><a href="#">주주총회</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li><a href="#">IR자료실</a></li>
+                                                <li><a href="#">실적발표</a></li>
+                                                <li><a href="#">감사보고서</a></li>
+                                                <li><a href="#">사업보고서</a></li>
+                                                <li><a href="#">연차보고서</a></li>
+                                                <li><a href="#">FAQ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop_li">
+                                            <ul class="drop_subul">
+                                                <li id="drop_first"><a href="#">결산공고</a></li>
+                                                <li id="drop_second"><a href="#" id="drop_title">공고</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </li>
+
+                            <li class="header_li">
+                                <a href="#" id="header_hover">채용
+                                    <span class="sprite sprite-cross_gray"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="header_util">
+                        <div class="header_lang">
+                            <a href="#">KOR</a>
+                            <a href="#">ENG</a>
+                        </div>
+                        <button type="button" class="sprite sprite-menu" id="menu"></button>
+                    </div>
+
+                    <div class="m_header_wrap">
+                        <div class="m_bg">
+                            <img src="http://tndus5837.dothome.co.kr/naver_img/btn_exit.png" alt="close" id="close">
+                        </div>
+                        <div class="m_nav">
+                            <div class="m_top">
+                                <img src="http://tndus5837.dothome.co.kr/naver_img/header_logo.png" alt="header_logo_m">
+                                <div class="m_util">
+                                    <a href="#">KOR</a>
+                                    <a href="#">ENG</a>
+                                </div>
+                            </div>
+                            <div class="m_bottom">
+                                <ul>
+                                    <li><a href="#">NAVER</a></li>
+                                    <li><a href="#">서비스</a></li>
+                                    <li><a href="#">가치실현</a></li>
+                                    <li><a href="#">홍보</a></li>
+                                    <li><a href="#">투자정보</a></li>
+                                    <li><a href="#">채용</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <section class="visual_wrap">
+                    <div class="visual_con">
+                        <ul>
+                            <li class="bg_1"></li>
+                            <li class="bg_2"></li>
+                            <li class="bg_3"></li>
+                            <li class="bg_4"></li>
+                        </ul>
+                        <button type="button" class="sprite sprite-left" id="prev"></button>
+                        <button type="button" class="sprite sprite-right" id="next"></button>
+                    </div>
+
+                    <div class="visual_text">
+                        <ul>
+                            <li class="text_1">
+                                <a href="#" class="fade">
+                                    <h2 class="sprite sprite-logo_1"></h2>
+
+                                    <div class="slide_text">
+                                        <p class="slide_title">
+                                            삶의 가치를 높이는 <br>
+                                            기술을 연구합니다.
+                                        </p>
+                                        <p class="slide_subtext">
+                                            당신이 더 가치 있는 일에 몰입할 수 있도록<br>
+                                            삶을 더 깊이 이해하는 기술을 만들어갑니다. 
+                                        </p>
+                                    </div>
+
+                                    <hr class="slide_hr">
+                                    <div class="hr_wrap">
+                                        <hr class="index_hr">
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="text_2">
+                                <a href="#" class="fade" style="display:none;">
+                                    <h2 class="sprite sprite-logo_3" ></h2>
+                                
+                                    <div class="slide_text">
+                                        <p class="slide_title">
+                                            무한한 가능성과의 <br>
+                                            만남을 기대합니다.
+                                        </p>
+                                        <p class="slide_subtext">
+                                            다양한 스몰비즈니스와 크리에이터의 가치가 발견되고<br>
+                                            그 이름을 꽃 피울 수 있도록 함께합니다.
+                                        </p>
+                                    </div>
+                                    <hr class="slide_hr">
+                                    <div class="hr_wrap">
+                                        <hr class="index_hr">
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="text_3">
+                                <a href="#" class="fade" style="display:none;">
+                                    <h2 class="sprite sprite-logo_2" ></h2>
+                                
+                                    <div class="slide_text">
+                                        <p class="slide_title">
+                                            더 넓은 세상에서 <br>
+                                            더 큰 미래를 생각합니다.
+                                        </p>
+                                        <p class="slide_subtext">
+                                            전 세계 이용자들을 만나 새로운 경험과 가치를 전하고,<br>
+                                            글로벌과 호흡하는 기술을 통해, 한 단계 진화한 연결을 만들어갑니다.
+                                        </p>
+                                    </div>
+                                    <hr class="slide_hr">
+                                    <div class="hr_wrap">
+                                        <hr class="index_hr">
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="text_4">
+                                <a href="#" class="fade" style="display:none;">
+                                    <h2 class="sprite sprite-logo_4"></h2>
+                                
+                                    <div class="slide_text">
+                                        <p class="slide_title">
+                                            생활환경지능 기술로<br>
+                                            새로운 연결과 발견의 가능성을 만듭니다.
+                                        </p>
+                                        <p class="slide_subtext">
+                                            네이버랩스는 사용자의 환경과 상황을 인지하고 이해하여<br>
+                                            필요한 정보와 서비스를 알아서 자연스럽게 연결하는 기술을 연구합니다.
+                                        </p>
+                                    </div>
+                                    <hr class="slide_hr">
+                                    <div class="hr_wrap">
+                                        <hr class="index_hr">
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="count">
+                        <span class="current">1</span>
+                        <span class="total">4</span>
+                    </div>
+                </section>
+                <section class="content_wrap">
+                    <div class="content_summary">
+                        <ul>
+                            <li>
+                                <h3 class="summary_title">NEWS</h3>
+                                <div class="news_box">
+                                    <a href="#">
+                                        <strong class="news_title">
+                                            네이버랩스 인턴들, 세계 무대서 ‘AIRCART’ 휠체어 버전 발표해 주목
+                                        </strong>
+                                        <p class="news_text">     
+                                            "실생활에 도움을 주는 로봇 기술이 휠체어와 만났다”
+                                            네이버랩스 인턴들, 세계 무대서 ‘AIRCART’ 휠체어 버전 발표해 주목
+                                            - 로보틱스 6기 학부생 인턴 5인의 프로젝트… HRI 분야 세계 최고 권위 학회에서 발표까지
+                                            - 서울대학교 간호대학 CHIC Lab과 협력… 기술 접목 넘어 보호자-탑승자의 인터랙션까지 고려한 설계로 눈길 끌어                                              
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="summary_text">
+                                    <a href="#">바로가기
+                                        <span class="sprite sprite-cross_gray_right"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <h3 class="summary_title">CARRER</h3>
+                                <p class="carrer_text">
+                                    수 많은 사용자의 목소리에서<br>
+                                    내 일의 자부심과 무게를 느낍니다.
+                                </p>
+                                <div class="summary_text">
+                                    <a href="#">네이버에서 일한다는 것
+                                        <span class="sprite sprite-cross_gray_right"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <h3 class="summary_title">STOCK</h3>
+                                <div class="stock_box">
+                                    <div class="stock_price_box">
+                                        <p class="price">126,500<span>원</span></p>
+                                        <div class="number">
+                                            <span class="sprite sprite-cross_red"></span>
+                                            <span>3,500</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <p class="date">KRX 2019.03.26</p>
+                                </div>
+                                <div class="summary_text">
+                                    <a href="#">주가정보
+                                        <span class="sprite sprite-cross_gray_right"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <h3 class="summary_title">결산공고</h3>
+                                <p class="carrer_text">
+                                    네이버 상세 재무상태표를<br>
+                                    확인할 수 있습니다.
+                                </p>
+                                <div class="summary_text">
+                                    <a href="#">결산공고 보러가기
+                                        <span class="sprite sprite-cross_gray_right"></span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content_service">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">5G 브레인리스 로봇 기술</p>
+                                        <p class="service_sub">로봇의 두뇌를 클라우드로</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">하이브리드 HD맵</p>
+                                        <p class="service_sub">자율주행차를 위한 HD맵 솔루션</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">클로바 스페셜 에디션</p>
+                                        <p class="service_sub">음악 추천부터 네이버 검색까지</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">네이버 웨일</p>
+                                        <p class="service_sub">바꾸지 않았으면 몰랐을 경험</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">데이터센터 각</p>
+                                        <p class="service_sub">데이터를 통해 현재를 기록하는 곳</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">그린팩토리</p>
+                                        <p class="service_sub">네이버의 공간이야기</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">네이버 웹툰</p>
+                                        <p class="service_sub">매일매일 새로운 재미</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">프로젝트 꽃</p>
+                                        <p class="service_sub">가치의 발견과 성장</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="service_text">
+                                        <span class="sprite sprite-cross_green"></span>
+                                        <p class="service_title">파파고</p>
+                                        <p class="service_sub">든든한 번역파트너</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="content_support">
+                        <div class="support_top">
+                            <h3 class="support_titile">기술로 다양성을 꽃피우는 플랫폼</h3>
+                            <p class="support_text">
+                                개인의 다양한 가능성이 의미있는 성공으로 꽃 피울 수 있도록<br>
+                                네이버가 서비스와 기술플랫폼을 통해 더 가까이 서포트(SUPPORT) 합니다.
+                            </p>
+                        </div>
+                        
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="sprite sprite-img_1" style="display:inline-block;"></span>
+                                    <div class="support_sub">
+                                        <p class="sub_title">Creators With Naver</p>
+                                        <p class="sub_text">
+                                            다양한 분야의 창작자들이 그들의 이름을<br>
+                                            빛낼 수 있도록 네이버가 함께 합니다.
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="sprite sprite-img_2" style="display:inline-block;"></span>
+                                    <div class="support_sub">
+                                        <p class="sub_title">Business With Naver</p>
+                                        <p class="sub_text">
+                                            파트너들의 성공적인 창업과<br>
+                                            지속가능한 사업을 위해 노력합니다.
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="sprite sprite-img_3" style="display:inline-block;"></span>
+                                    <div class="support_sub">
+                                        <p class="sub_title">Developers With Naver</p>
+                                        <p class="sub_text">
+                                            개발자와 개발사들의 지식과 경험을<br>
+                                            공유하며 함께 성장해 나갑니다.
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="sprite sprite-img_4" style="display:inline-block;"></span>
+                                    <div class="support_sub">
+                                        <p class="sub_title">프로젝트 꽃</p>
+                                        <p class="sub_text">
+                                            다양한 스몰비즈니스와 크리에이터들이<br>
+                                            꽃 피울 수 있도록 네이버가 함께 합니다.
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <div class="footer_wrap">
+                    <div class="footer_img">
+                        <img src="http://tndus5837.dothome.co.kr/naver_img/footer_logo.png" alt="footer_logo">
+                    </div>
+                    
+                    <div class="footer_ul">
+                        <ul>
+                            <li><a href="#">제휴제안</a></li>
+                            <li><a href="#">기업윤리 상담센터</a></li>
+                            <li><a href="#">개인정보 처리방침</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer_cp">
+                        <p class="footer_copy">
+                            Copyright ⓒ
+                            <strong>NAVER Corp.</strong>
+                            All Rights Reserved. 
+                        </p>
+                    </div>
+
+                    <div class="footer_button">
+                        <a href="#">
+                            <p class="footer_text">자회사 바로가기</p>
+                            <img src="http://tndus5837.dothome.co.kr/naver_img/plus.png" alt="더보기">
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>
